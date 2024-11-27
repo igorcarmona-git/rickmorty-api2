@@ -5,6 +5,7 @@ import Link from "next/link";
 import api from "./utils/api";
 import Image from "next/image";
 
+// Tipagem para um personagem individual
 type Character = {
   id: string;
   name: string;
@@ -13,14 +14,18 @@ type Character = {
   image: string;
 };
 
-export default async function Home({ searchParams }: {
-  searchParams: { search?: string; page?: string };
-}) {
+// Tipagem para os parâmetros de URL
+type SearchParams = {
+  search?: string;
+  page?: string;
+};
+
+export default async function Home({ searchParams }: { searchParams: SearchParams }) {
   const search = searchParams.search || ""; // Valor do parâmetro de pesquisa
   const page = Number(searchParams.page) || 1; // Página atual (valor padrão: 1)
 
   // Busca de personagens da API com paginação
-  const { data } = await api.get(`character?page=${page}`);
+  const { data } = await api.get(`character?page=${page}`); // Tipagem da resposta da API
   const personagens = data.results;
   const totalPages = data.info.pages;
 
@@ -57,9 +62,9 @@ export default async function Home({ searchParams }: {
                 <Image
                   src={personagem.image}
                   alt={personagem.name}
-                  width={60}
-                  height={60}
-                  className="rounded-md shadow-md w-32 h-32 object-cover"
+                  width={128}
+                  height={128}
+                  className="rounded-md shadow-md object-cover"
                 />
                 <p className="text-sm text-gray-600">{personagem.species}</p>
                 <p className="text-sm text-gray-600">Status: {personagem.status}</p>
