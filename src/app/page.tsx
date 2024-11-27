@@ -3,6 +3,15 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import api from "./utils/api";
+import Image from "next/image";
+
+type Character = {
+  id: string;
+  name: string;
+  species: string;
+  status: string;
+  image: string;
+};
 
 export default async function Home({ searchParams }: {
   searchParams: { search?: string; page?: string };
@@ -16,7 +25,7 @@ export default async function Home({ searchParams }: {
   const totalPages = data.info.pages;
 
   // Filtrar personagens com base na pesquisa
-  const filteredPersonagens = personagens.filter((personagem: any) =>
+  const filteredPersonagens = personagens.filter((personagem: Character) =>
     personagem.name.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -45,9 +54,11 @@ export default async function Home({ searchParams }: {
                 <CardTitle>{personagem.name}</CardTitle>
               </CardHeader>
               <CardContent className="flex flex-col items-center space-y-4">
-                <img
+                <Image
                   src={personagem.image}
                   alt={personagem.name}
+                  width={60}
+                  height={60}
                   className="rounded-md shadow-md w-32 h-32 object-cover"
                 />
                 <p className="text-sm text-gray-600">{personagem.species}</p>

@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Image from "next/image";
 
 export interface CharacterProps {
   id: number;
@@ -43,10 +44,12 @@ const CharacterDetail: React.FC<CharacterProps> = ({
     <div className="p-8 flex flex-col items-center space-y-6">
       <Card className="w-full max-w-3xl">
         <CardHeader className="flex items-center space-x-4">
-          <img
+        <Image
             src={image}
             alt={name}
-            className="w-32 h-32 rounded-full shadow-lg border border-gray-200"
+            width={192}
+            height={192}
+            className="rounded-md shadow-md object-cover"
           />
           <div>
             <CardTitle className="text-3xl font-bold">{name}</CardTitle>
