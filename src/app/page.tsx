@@ -47,7 +47,7 @@ export default async function Home({ searchParams }: {
 
       {/* Lista de Personagens */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredPersonagens.map((personagem: any) => (
+        {filteredPersonagens.map((personagem: Character) => (
           <Link key={personagem.id} href={`/personagem/${personagem.id}`}>
             <Card className="hover:shadow-lg cursor-pointer">
               <CardHeader>
