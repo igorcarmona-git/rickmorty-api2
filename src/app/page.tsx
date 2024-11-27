@@ -14,23 +14,28 @@ type Character = {
   image: string;
 };
 
-// Tipagem para os parâmetros de URL
-type SearchParams = {
-  search?: string;
-  page?: string;
+// Tipagem para a resposta da API
+type ApiResponse = {
+  info: {
+    pages: number;
+    count: number;
+    next: string | null;
+    prev: string | null;
+  };
+  results: Character[];
 };
 
-export default async function Home({ searchParams }: { searchParams: SearchParams }) {
+export default async function Home({ searchParams }: { searchParams: Record<string, string | undefined> }) {
   const search = searchParams.search || ""; // Valor do parâmetro de pesquisa
   const page = Number(searchParams.page) || 1; // Página atual (valor padrão: 1)
 
   // Busca de personagens da API com paginação
-  const { data } = await api.get(`character?page=${page}`); // Tipagem da resposta da API
+  const { data } = await api.get<ApiResponse>(`character?page=${page}`);
   const personagens = data.results;
   const totalPages = data.info.pages;
 
   // Filtrar personagens com base na pesquisa
-  const filteredPersonagens = personagens.filter((personagem: Character) =>
+  const filteredPersonagens = personagens.filter((personagem) =>
     personagem.name.toLowerCase().includes(search.toLowerCase())
   );
 
