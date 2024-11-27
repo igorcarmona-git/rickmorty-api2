@@ -1,3 +1,9 @@
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+
 export interface CharacterProps {
   id: number;
   name: string;
@@ -18,7 +24,7 @@ export interface CharacterProps {
   url: string;
   created: string;
 }
- 
+
 const CharacterDetail: React.FC<CharacterProps> = ({
   id,
   name,
@@ -34,52 +40,88 @@ const CharacterDetail: React.FC<CharacterProps> = ({
   created,
 }) => {
   return (
-    <div className="max-w-2xl mx-auto bg-white p-5 rounded-lg shadow-lg">
-      <div className="flex items-center">
-        <img className="w-32 h-32 rounded-full mr-4" src={image} alt={name} />
-        <div>
-          <h2 className="text-2xl font-bold  text-red-900">{name}</h2>
-          <p className="text-gray-600">ID: {id}</p>
-          <p className="text-gray-600">Status: {status}</p>
-          <p className="text-gray-600">Species: {species}</p>
-          <p className="text-gray-600">Type: {type}</p>
-          <p className="text-gray-600">Gender: {gender}</p>
-        </div>
-      </div>
-      <div className="mt-4">
-        <h3 className="text-xl font-semibold  text-red-900">Origin</h3>
-        <p className="text-gray-600">{origin.name}</p>
-        <a className="text-blue-500" href={origin.url} target="_blank" rel="noopener noreferrer">
-          View Origin
-        </a>
-      </div>
-      <div className="mt-4">
-        <h3 className="text-xl font-semibold  text-red-900">Location</h3>
-        <p className="text-gray-600">{location.name}</p>
-        <a className="text-blue-500" href={location.url} target="_blank" rel="noopener noreferrer">
-          View Location
-        </a>
-      </div>
-      <div className="mt-4">
-        <h3 className="text-xl font-semibold  text-red-900">Episodes</h3>
-        <ul className="list-disc list-inside">
-          {episode.map((ep, index) => (
-            <li key={index}>
-              <a className="text-blue-500" href={ep} target="_blank" rel="noopener noreferrer">
-                Episode {index + 1}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="mt-4">
-        <p className="text-gray-600">Created: {new Date(created).toLocaleDateString()}</p>
-        <a className="text-blue-500" href={url} target="_blank" rel="noopener noreferrer">
-          View Character
-        </a>
-      </div>
+    <div className="p-8 flex flex-col items-center space-y-6">
+      <Card className="w-full max-w-3xl">
+        <CardHeader className="flex items-center space-x-4">
+          <img
+            src={image}
+            alt={name}
+            className="w-32 h-32 rounded-full shadow-lg border border-gray-200"
+          />
+          <div>
+            <CardTitle className="text-3xl font-bold">{name}</CardTitle>
+            <CardDescription className="text-gray-600">ID: {id}</CardDescription>
+          </div>
+        </CardHeader>
+        <Separator />
+        <CardContent className="space-y-6">
+          <div className="flex space-x-4">
+            <Badge variant="outline">Status: {status}</Badge>
+            <Badge variant="outline">Species: {species}</Badge>
+            <Badge variant="outline">Gender: {gender}</Badge>
+            {type && <Badge variant="outline">Type: {type}</Badge>}
+          </div>
+          <div>
+            <h3 className="text-xl font-semibold">Origin</h3>
+            <p>{origin.name}</p>
+            <a
+              href={origin.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 hover:underline"
+            >
+              View Origin
+            </a>
+          </div>
+          <div>
+            <h3 className="text-xl font-semibold">Location</h3>
+            <p>{location.name}</p>
+            <a
+              href={location.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 hover:underline"
+            >
+              View Location
+            </a>
+          </div>
+          <div>
+            <h3 className="text-xl font-semibold">Episodes</h3>
+            <ul className="list-disc list-inside space-y-2">
+              {episode.map((ep, index) => (
+                <li key={index}>
+                  <a
+                    href={ep}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 hover:underline"
+                  >
+                    Episode {index + 1}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <p className="text-gray-600">Created: {new Date(created).toLocaleDateString()}</p>
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 hover:underline"
+            >
+              View Character
+            </a>
+          </div>
+        </CardContent>
+      </Card>
+      <Link href="/">
+        <Button variant="outline" className="mt-4">
+          ←  Back to Characters
+        </Button>
+      </Link>
     </div>
   );
 };
 
-export default CharacterDetail
+export default CharacterDetail;
